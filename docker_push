@@ -1,6 +1,6 @@
 #!/bin/bash -e
 
-BASE_IMAGE="wurstmeister/kafka"
+BASE_IMAGE="xuxiangwork/kafka"
 IMAGE_VERSION="$1"
 
 if [ -z "$IMAGE_VERSION" ]; then

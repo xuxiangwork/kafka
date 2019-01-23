@@ -1,11 +1,11 @@
 version: '3.2'
 services:
   zookeeper:
-    image: wurstmeister/zookeeper
+    image: zookeeper
     ports:
       - "2181:2181"
   kafka:
-    image: wurstmeister/kafka:latest
+    image: xuxiangwork/kafka:latest
     ports:
       - target: 9094
         published: 9094

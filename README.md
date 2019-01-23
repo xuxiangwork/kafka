@@ -1,15 +1,12 @@
-[![Docker Pulls](https://img.shields.io/docker/pulls/wurstmeister/kafka.svg)](https://hub.docker.com/r/wurstmeister/kafka/)
-[![Docker Stars](https://img.shields.io/docker/stars/wurstmeister/kafka.svg)](https://hub.docker.com/r/wurstmeister/kafka/)
-[![](https://images.microbadger.com/badges/version/wurstmeister/kafka.svg)](https://microbadger.com/images/wurstmeister/kafka "Get your own version badge on microbadger.com")
-[![](https://images.microbadger.com/badges/image/wurstmeister/kafka.svg)](https://microbadger.com/images/wurstmeister/kafka "Get your own image badge on microbadger.com")
-[![Build Status](https://travis-ci.org/wurstmeister/kafka-docker.svg?branch=master)](https://travis-ci.org/wurstmeister/kafka-docker)
+[![Docker Pulls](https://img.shields.io/docker/pulls/xuxiangwork/kafka.svg)](https://hub.docker.com/r/xuxiangwork/kafka/)
+[![Docker Stars](https://img.shields.io/docker/stars/xuxiangwork/kafka.svg)](https://hub.docker.com/r/xuxiangwork/kafka/)
 
 kafka-docker
 ============
 
 Dockerfile for [Apache Kafka](http://kafka.apache.org/)
 
-The image is available directly from [Docker Hub](https://hub.docker.com/r/wurstmeister/kafka/)
+The image is available directly from [Docker Hub](https://hub.docker.com/r/xuxiangwork/kafka/)
 
 Tags and releases
 -----------------
@@ -39,7 +36,7 @@ Everytime the image is updated, all tags will be pushed with the latest updates.
 ## Pre-Requisites
 
 - install docker-compose [https://docs.docker.com/compose/install/](https://docs.docker.com/compose/install/)
-- modify the ```KAFKA_ADVERTISED_HOST_NAME``` in [docker-compose.yml](https://raw.githubusercontent.com/wurstmeister/kafka-docker/master/docker-compose.yml) to match your docker host IP (Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.)
+- modify the ```KAFKA_ADVERTISED_HOST_NAME``` in [docker-compose.yml](https://github.com/xuxiangwork/kafka/blob/master/docker-compose.yml) to match your docker host IP (Note: Do not use localhost or 127.0.0.1 as the host ip if you want to run multiple brokers.)
 - if you want to customize any Kafka parameters, simply add them as environment variables in ```docker-compose.yml```, e.g. in order to increase the ```message.max.bytes``` parameter set the environment to ```KAFKA_MESSAGE_MAX_BYTES: 2000000```. To turn off automatic topic creation set ```KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'```
 - Kafka's log4j usage can be customized by adding environment variables prefixed with ```LOG4J_```. These will be mapped to ```log4j.properties```. For example: ```LOG4J_LOGGER_KAFKA_AUTHORIZER_LOGGER=DEBUG, authorizerAppender```
 
@@ -51,19 +48,9 @@ Start a cluster:
 
 - ```docker-compose up -d ```
 
-Add more brokers:
-
-- ```docker-compose scale kafka=3```
-
 Destroy a cluster:
 
 - ```docker-compose stop```
-
-## Note
-
-The default ```docker-compose.yml``` should be seen as a starting point. By default each broker will get a new port number and broker id on restart. Depending on your use case this might not be desirable. If you need to use specific ports and broker ids, modify the docker-compose configuration accordingly, e.g. [docker-compose-single-broker.yml](https://github.com/wurstmeister/kafka-docker/blob/master/docker-compose-single-broker.yml):
-
-- ```docker-compose -f docker-compose-single-broker.yml up```
 
 ## Broker IDs
 
@@ -175,17 +162,19 @@ In the above example the AWS metadata service is used to put the instance's avai
 
 ## JMX
 
-For monitoring purposes you may wish to configure JMX. Additional to the standard JMX parameters, problems could arise from the underlying RMI protocol used to connect
+For monitoring purposes you may wish to configure JMX. You can configure the broker jmx port.
+ 
+1. explicitly, using ```CUSTOM_JMX_PORT```
 
-* java.rmi.server.hostname - interface to bind listening port
-* com.sun.management.jmxremote.rmi.port - The port to service RMI requests
+If you don't specify a jmx port in your docker-compose file, it will automatically be generated which default to be ```9999``.
 
-For example, to connect to a kafka running locally (assumes exposing port 1099)
+## JVM
 
-      KAFKA_JMX_OPTS: "-Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=127.0.0.1 -Dcom.sun.management.jmxremote.rmi.port=1099"
-      JMX_PORT: 1099
+For control the jvm size. You can configure the broker jvm.
+ 
+1. explicitly, using ```JVM_XMS``` ```JVM_XMX```
 
-Jconsole can now connect at ```jconsole 192.168.99.100:1099```
+If you don't specify a jvm in your docker-compose file, it will automatically be generated which default to be ```1G``. For monitoring purposes we suggest to use default value.
 
 ## Docker Swarm Mode
 
@@ -208,10 +197,3 @@ Older compose files using the short-version of port mapping may encounter Kafka 
 
 See the included sample compose file ```docker-compose-swarm.yml```
 
-## Release process
-
-See the [wiki](https://github.com/wurstmeister/kafka-docker/wiki/ReleaseProcess) for information on adding or updating versions to release to Dockerhub.
-
-## Tutorial
-
-[http://wurstmeister.github.io/kafka-docker/](http://wurstmeister.github.io/kafka-docker/)
