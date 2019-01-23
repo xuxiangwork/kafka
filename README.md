@@ -166,7 +166,7 @@ For monitoring purposes you may wish to configure JMX. You can configure the bro
  
 1. explicitly, using ```CUSTOM_JMX_PORT```
 
-If you don't specify a jmx port in your docker-compose file, it will automatically be generated which default to be ```9999``.
+If you don't specify a jmx port in your docker-compose file, it will automatically be generated which default to be ```9999```.
 
 ## JVM
 
@@ -174,7 +174,7 @@ For control the jvm size. You can configure the broker jvm.
  
 1. explicitly, using ```JVM_XMS``` ```JVM_XMX```
 
-If you don't specify a jvm in your docker-compose file, it will automatically be generated which default to be ```1G``. For monitoring purposes we suggest to use default value.
+If you don't specify jvm in your docker-compose file, it will automatically be generated which default to be ```1G```. For monitoring purposes we suggest to use default value.
 
 ## Docker Swarm Mode
 
