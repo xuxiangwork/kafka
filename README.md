@@ -174,7 +174,7 @@ For control the jvm size. You can configure the broker jvm.
  
 1. explicitly, using ```JVM_XMS``` ```JVM_XMX```
 
-If you don't specify jvm in your docker-compose file, it will automatically be generated which default to be ```1G```. For monitoring purposes we suggest to use default value.
+If you don't specify jvm in your docker-compose file, it will automatically be generated which default to be ```1G``` . For monitoring purposes we suggest to use default value.
 
 ## Docker Swarm Mode
 
